@@ -2,57 +2,54 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:local="clr-namespace:KolabLoader"
         mc:Ignorable="d"
-        Title="KoLAB  - Virtuelle Kollaborationslabore BaWü" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Width="800" Margin="0" Height="506">
+        Title="KoLAB  - Virtuelle Kollaborationslabore BaWü" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Width="810" Margin="0" Height="507" Closing="Window_Closing">
     <Grid>
         <Image RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Right" Height="91" Margin="0,10,10,0" VerticalAlignment="Top" Width="251" Source="logo.png"/>
         <GroupBox Header="Nutzerdaten" HorizontalAlignment="Left" Height="91" Margin="10,10,0,0" VerticalAlignment="Top" Width="582">
             <Grid HorizontalAlignment="Left" Height="72" Margin="5,0,-2,-3" VerticalAlignment="Top" Width="567">
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="108,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="108,39,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="108,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Text="{Binding _nickname, Mode=TwoWay}"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="108,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Text="{Binding _institution, Mode=TwoWay}"/>
                 <Label Content="Anzeigename" HorizontalAlignment="Left" Margin="-3,6,0,0" VerticalAlignment="Top" Width="106"/>
                 <Label Content="Institution" HorizontalAlignment="Left" Margin="-3,35,0,0" VerticalAlignment="Top" Width="106"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="397,10,-17,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="154"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="397,10,-17,0" TextWrapping="Wrap" Text="{Binding _username, Mode=TwoWay}" VerticalAlignment="Top" Width="154"/>
                 <PasswordBox HorizontalAlignment="Left" Height="23" Margin="397,39,-17,0" Password="" VerticalAlignment="Top" Width="154"/>
                 <Label Content="Login" HorizontalAlignment="Left" Margin="327,6,0,0" VerticalAlignment="Top" Width="65"/>
                 <Label Content="Passwort" HorizontalAlignment="Left" Margin="327,35,0,0" VerticalAlignment="Top" Width="65"/>
             </Grid>
 
         </GroupBox>
-        <GroupBox Header="Workspace-Daten" HorizontalAlignment="Left" Height="115" Margin="10,114,0,0" VerticalAlignment="Top" Width="772">
+        <GroupBox Header="Workspace-Daten" Height="115" Margin="10,114,10,0" VerticalAlignment="Top">
             <Grid Margin="2,-8,-2,-5">
                 <Label Content="Arbeitsverzeichnis" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Grid.Row="0" Grid.Column="0" Margin="0,7,0,0"/>
                 <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="nicht ausgewählt" IsEnabled="False" VerticalAlignment="Top" Width="475" Grid.Row="0" Margin="110,10,0,0" />
                 <Button Content="Auswählen..." HorizontalAlignment="Left" Margin="602,10,0,0" VerticalAlignment="Top" Width="110" Height="23"/>
                 <Label Content="Session Key" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Grid.Row="0" Grid.Column="0" Margin="0,38,0,0"/>
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="nicht ausgewählt" IsEnabled="False" VerticalAlignment="Top" Width="475" Grid.Row="0" Margin="110,10,0,0" />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="115" Grid.Row="0" Margin="110,41,0,0" />
-                <Button Content="Auswählen..." HorizontalAlignment="Left" Margin="602,10,0,0" VerticalAlignment="Top" Width="148" Height="23"/>
-                <Button Content="Neue Session generieren" HorizontalAlignment="Left" Margin="602,41,0,0" VerticalAlignment="Top" Width="148" Height="23"/>
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="115
-                         " Grid.Row="0" Margin="237,41,0,0" />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="115
-                         " Grid.Row="0" Margin="363,41,0,0" />
-                <Label Content="Sessionstatus: unbekannt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="750" Grid.Row="0" Grid.Column="0" Margin="0,73,0,-1" Background="#FFC1C1C1"/>
+                <TextBox x:Name="workspace_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding _workspacesPath, Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Top" Width="475" Grid.Row="0" Margin="110,10,0,0" />
+                <TextBox x:Name="sk_TextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="475" Grid.Row="0" Margin="110,41,0,0"  Text="{Binding _session, Mode=TwoWay}"/>
+                <Button x:Name="WorkDirectoryChoose_Btn" Content="Auswählen..." Margin="602,10,22,0" VerticalAlignment="Top" Height="23" Click="WorkDirectoryChoose_Btn_Click"/>
+                <Button x:Name="GenerateSessionBtn" Content="Neue Session generieren" Margin="602,41,22,0" VerticalAlignment="Top" Height="23" Click="GenerateSessionBtn_Click"/>
+                <Label Content="Sessionstatus: unbekannt" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Margin="0,73,22,0" Background="#FFC1C1C1"/>
             </Grid>
         </GroupBox>
-        <Expander Header="Erweiterte Einstellungen" HorizontalAlignment="Left" Margin="10,293,0,0" VerticalAlignment="Top" Width="772" IsExpanded="True">
+        <Expander Header="Erweiterte Einstellungen" Margin="10,293,10,0" VerticalAlignment="Top" IsExpanded="True">
             <GroupBox Height="151" Margin="0,0,0,20">
                 <Grid Margin="2,-8,-2,4">
                     <Label Content="inviwo .exe" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Grid.Row="0" Grid.Column="0" Margin="5,16,0,0"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="nicht ausgewählt" IsEnabled="False" VerticalAlignment="Top" Width="475" Grid.Row="0"  Grid.Column="1" Margin="115,19,0,0" />
-                    <Button Content="Auswählen..." HorizontalAlignment="Left" Margin="607,19,0,0" VerticalAlignment="Top" Width="141" Height="23" Grid.Row="0"  Grid.Column="2"/>
+                    <TextBox x:Name="inviwoExe_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding _inviwoPath, Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Top" Width="475" Grid.Row="0"  Grid.Column="1" Margin="115,19,0,0" />
+                    <Button x:Name="InviwoExeChoose_Btn" Content="Auswählen..." HorizontalAlignment="Left" Margin="607,19,0,0" VerticalAlignment="Top" Width="141" Height="23" Grid.Row="0"  Grid.Column="2" Click="InviwoExeChoose_Btn_Click"/>
                     <Label Content="megamol .exe" HorizontalAlignment="Left"  Width="105" Grid.Row="1" Grid.Column="0" Margin="5,46,0,64"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="nicht ausgewählt" IsEnabled="False"  Width="475" Grid.Row="1" Grid.Column="1" Margin="115,50,0,64" />
-                    <Button Content="Auswählen..." HorizontalAlignment="Left" Margin="607,50,0,64" Grid.Row="1" Grid.Column="2" Width="141" Height="23"/>
+                    <TextBox x:Name="megamolExe_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding _megamolPath, Mode=TwoWay}" IsEnabled="False"  Width="475" Grid.Row="1" Grid.Column="1" Margin="115,50,0,64" />
+                    <Button x:Name="MegamolExeChoose_Btn" Content="Auswählen..." HorizontalAlignment="Left" Margin="607,50,0,64" Grid.Row="1" Grid.Column="2" Width="141" Height="23" Click="MegamolExeChoose_Btn_Click"/>
                 </Grid>
             </GroupBox>
         </Expander>
-        <Button Content="Beenden" HorizontalAlignment="Left" Margin="10,242,0,0" VerticalAlignment="Top" Width="182" Height="34"/>
-        <Button Content="Session jetzt starten >>" HorizontalAlignment="Left" Margin="600,242,0,0" VerticalAlignment="Top" Width="182" Height="34" FontWeight="Bold"/>
-        <Button Content="Zur KoLAB Webplattform" HorizontalAlignment="Left" Margin="204,242,0,0" VerticalAlignment="Top" Width="182" Height="34"/>
+        <Button x:Name="Exit_Btn" Content="Beenden" HorizontalAlignment="Left" Margin="10,242,0,0" VerticalAlignment="Top" Width="182" Height="34" Click="Exit_Btn_Click"/>
+        <Button x:Name="StartSession_Btn" Content="Session jetzt starten >>" Margin="600,242,10,0" VerticalAlignment="Top" Height="34" FontWeight="Bold" Click="StartSession_Btn_Click"/>
+        <Button x:Name="KolabWeb_Btn" Content="Zur KoLAB Webplattform" HorizontalAlignment="Left" Margin="204,242,0,0" VerticalAlignment="Top" Width="182" Height="34" Click="KolabWeb_Btn_Click"/>
 
     </Grid>
 </Window>
