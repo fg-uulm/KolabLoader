@@ -7,49 +7,91 @@
         xmlns:local="clr-namespace:KolabLoader"
         mc:Ignorable="d"
         Title="KoLAB  - Virtuelle Kollaborationslabore BaWü" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Width="810" Margin="0" Height="507" Closing="Window_Closing">
-    <Grid>
-        <Image RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Right" Height="91" Margin="0,10,10,0" VerticalAlignment="Top" Width="251" Source="logo.png"/>
-        <GroupBox Header="Nutzerdaten" HorizontalAlignment="Left" Height="91" Margin="10,10,0,0" VerticalAlignment="Top" Width="582">
-            <Grid HorizontalAlignment="Left" Height="72" Margin="5,0,-2,-3" VerticalAlignment="Top" Width="567">
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="108,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Text="{Binding _nickname, Mode=TwoWay}"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="108,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Text="{Binding _institution, Mode=TwoWay}"/>
-                <Label Content="Anzeigename" HorizontalAlignment="Left" Margin="-3,6,0,0" VerticalAlignment="Top" Width="106"/>
-                <Label Content="Institution" HorizontalAlignment="Left" Margin="-3,35,0,0" VerticalAlignment="Top" Width="106"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="397,10,-17,0" TextWrapping="Wrap" Text="{Binding _username, Mode=TwoWay}" VerticalAlignment="Top" Width="154"/>
-                <PasswordBox HorizontalAlignment="Left" Height="23" Margin="397,39,-17,0" Password="" VerticalAlignment="Top" Width="154"/>
-                <Label Content="Login" HorizontalAlignment="Left" Margin="327,6,0,0" VerticalAlignment="Top" Width="65"/>
-                <Label Content="Passwort" HorizontalAlignment="Left" Margin="327,35,0,0" VerticalAlignment="Top" Width="65"/>
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Source="logo.png" Grid.Column="1" Height="91"/>
+            <GroupBox Header="Nutzerdaten" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Height="90" Width="600">
+                <Grid HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="500">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding _nickname, Mode=TwoWay}"  Grid.Row="0" Grid.Column="1"/>
+                    <TextBox Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding _institution, Mode=TwoWay}" Grid.Row="1" Grid.Column="1"/>
+                    <Label Content="Anzeigename" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0"/>
+                    <Label Content="Institution" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="1" Grid.Column="0"/>
+                    <TextBox Height="23" TextWrapping="Wrap" Text="{Binding _username, Mode=TwoWay}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="4"/>
+                    <PasswordBox Height="23" Password="" VerticalAlignment="Center" Grid.Row="1" Grid.Column="4"/>
+                    <Label Content="Login" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3"/>
+                    <Label Content="Passwort" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3"/>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <GroupBox Header="Workspace-Daten" Margin="10,10,10,0" VerticalAlignment="Top">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="122"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Arbeitsverzeichnis" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Grid.Row="0" Grid.Column="0" Margin="0"/>
+                <Label Content="Session Key" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Grid.Row="1" Grid.Column="0" Margin="0"/>
+                <Label Content="Sessionstatus: unbekannt" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,15,0,0" Background="#FFC1C1C1"/>
+                <TextBox x:Name="workspace_Tb" Height="23" TextWrapping="Wrap" Text="{Binding _workspacesPath, Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1" Margin="0,0,10,0" />
+                <TextBox x:Name="sk_TextBox" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Margin="0,0,10,0"  Text="{Binding _session, Mode=TwoWay}"/>
+                <Button x:Name="WorkDirectoryChoose_Btn" Content="Auswählen..." Margin="0" VerticalAlignment="Top" Height="23" Click="WorkDirectoryChoose_Btn_Click" Grid.Row="0" Grid.Column="2"/>
+                <Button x:Name="GenerateSessionBtn" Content="Neue Session generieren" Margin="0" VerticalAlignment="Top" Height="23" Click="GenerateSessionBtn_Click" Grid.Row="1" Grid.Column="2"/>
             </Grid>
-
         </GroupBox>
-        <GroupBox Header="Workspace-Daten" Height="115" Margin="10,114,10,0" VerticalAlignment="Top">
-            <Grid Margin="2,-8,-2,-5">
-                <Label Content="Arbeitsverzeichnis" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Grid.Row="0" Grid.Column="0" Margin="0,7,0,0"/>
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="nicht ausgewählt" IsEnabled="False" VerticalAlignment="Top" Width="475" Grid.Row="0" Margin="110,10,0,0" />
-                <Button Content="Auswählen..." HorizontalAlignment="Left" Margin="602,10,0,0" VerticalAlignment="Top" Width="110" Height="23"/>
-                <Label Content="Session Key" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Grid.Row="0" Grid.Column="0" Margin="0,38,0,0"/>
-                <TextBox x:Name="workspace_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding _workspacesPath, Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Top" Width="475" Grid.Row="0" Margin="110,10,0,0" />
-                <TextBox x:Name="sk_TextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="475" Grid.Row="0" Margin="110,41,0,0"  Text="{Binding _session, Mode=TwoWay}"/>
-                <Button x:Name="WorkDirectoryChoose_Btn" Content="Auswählen..." Margin="602,10,22,0" VerticalAlignment="Top" Height="23" Click="WorkDirectoryChoose_Btn_Click"/>
-                <Button x:Name="GenerateSessionBtn" Content="Neue Session generieren" Margin="602,41,22,0" VerticalAlignment="Top" Height="23" Click="GenerateSessionBtn_Click"/>
-                <Label Content="Sessionstatus: unbekannt" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Margin="0,73,22,0" Background="#FFC1C1C1"/>
-            </Grid>
-        </GroupBox>
-        <Expander Header="Erweiterte Einstellungen" Margin="10,293,10,0" VerticalAlignment="Top" IsExpanded="True">
-            <GroupBox Height="151" Margin="0,0,0,20">
-                <Grid Margin="2,-8,-2,4">
-                    <Label Content="inviwo .exe" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Grid.Row="0" Grid.Column="0" Margin="5,16,0,0"/>
-                    <TextBox x:Name="inviwoExe_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding _inviwoPath, Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Top" Width="475" Grid.Row="0"  Grid.Column="1" Margin="115,19,0,0" />
-                    <Button x:Name="InviwoExeChoose_Btn" Content="Auswählen..." HorizontalAlignment="Left" Margin="607,19,0,0" VerticalAlignment="Top" Width="141" Height="23" Grid.Row="0"  Grid.Column="2" Click="InviwoExeChoose_Btn_Click"/>
-                    <Label Content="megamol .exe" HorizontalAlignment="Left"  Width="105" Grid.Row="1" Grid.Column="0" Margin="5,46,0,64"/>
-                    <TextBox x:Name="megamolExe_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding _megamolPath, Mode=TwoWay}" IsEnabled="False"  Width="475" Grid.Row="1" Grid.Column="1" Margin="115,50,0,64" />
-                    <Button x:Name="MegamolExeChoose_Btn" Content="Auswählen..." HorizontalAlignment="Left" Margin="607,50,0,64" Grid.Row="1" Grid.Column="2" Width="141" Height="23" Click="MegamolExeChoose_Btn_Click"/>
+        <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+            <Button x:Name="Exit_Btn" Content="Beenden" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Top" Width="120" Height="34" Click="Exit_Btn_Click" Padding="10,1"/>
+            <Button x:Name="KolabWeb_Btn" Content="Zur KoLAB Webplattform" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Top" Width="182" Height="34" Click="KolabWeb_Btn_Click" Padding="10,1"/>
+            <Button x:Name="Save_Btn" Content="Speichern" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Top" Width="120" Height="34" Click="SaveBtn_Click" Padding="10,1"/>
+            <Button x:Name="StartSession_Btn" Content="Session jetzt starten >>" Margin="20,0,0,0" VerticalAlignment="Top" Height="34" FontWeight="Bold" Click="StartSession_Btn_Click" HorizontalAlignment="Right" Padding="10,1" HorizontalContentAlignment="Center" Width="200"/>
+        </StackPanel>
+        <Expander Header="Erweiterte Einstellungen" Margin="10,20,10,10" VerticalAlignment="Top" IsExpanded="False">
+            <GroupBox Margin="0,0,0,20">
+                <Grid Margin="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="inviwo .exe" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Grid.Row="0" Grid.Column="0" Margin="0"/>
+                    <TextBox x:Name="inviwoExe_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding _inviwoPath, Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Top" Width="475" Grid.Row="0"  Grid.Column="1" Margin="0" />
+                    <Button x:Name="InviwoExeChoose_Btn" Content="Auswählen..." HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="141" Height="23" Grid.Row="0"  Grid.Column="2" Click="InviwoExeChoose_Btn_Click"/>
+                    <Label Content="megamol .exe" HorizontalAlignment="Left"  Width="105" Grid.Row="1" Grid.Column="0" Margin="0"/>
+                    <TextBox x:Name="megamolExe_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding _megamolPath, Mode=TwoWay}" IsEnabled="False"  Width="475" Grid.Row="1" Grid.Column="1" Margin="0" />
+                    <Button x:Name="MegamolExeChoose_Btn" Content="Auswählen..." HorizontalAlignment="Left" Margin="0" Grid.Row="1" Grid.Column="2" Width="141" Height="23" Click="MegamolExeChoose_Btn_Click" Padding="0"/>
+                    <Label Content="unity .exe" HorizontalAlignment="Left"  Width="105" Grid.Row="2" Grid.Column="0" Margin="0"/>
+                    <TextBox x:Name="unityExe_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding _projectPath, Mode=TwoWay}" IsEnabled="False"  Width="475" Grid.Row="2" Grid.Column="1" Margin="0" />
+                    <Button x:Name="UnityExeChoose_Btn" Content="Auswählen..." HorizontalAlignment="Left" Margin="0" Grid.Row="2" Grid.Column="2" Width="141" Height="23" Click="UnityExeChoose_Btn_Click" Padding="0"/>
                 </Grid>
             </GroupBox>
         </Expander>
-        <Button x:Name="Exit_Btn" Content="Beenden" HorizontalAlignment="Left" Margin="10,242,0,0" VerticalAlignment="Top" Width="182" Height="34" Click="Exit_Btn_Click"/>
-        <Button x:Name="StartSession_Btn" Content="Session jetzt starten >>" Margin="600,242,10,0" VerticalAlignment="Top" Height="34" FontWeight="Bold" Click="StartSession_Btn_Click"/>
-        <Button x:Name="KolabWeb_Btn" Content="Zur KoLAB Webplattform" HorizontalAlignment="Left" Margin="204,242,0,0" VerticalAlignment="Top" Width="182" Height="34" Click="KolabWeb_Btn_Click"/>
-
-    </Grid>
+    </StackPanel>
 </Window>

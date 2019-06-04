@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace KolabLoader
 {
@@ -98,6 +99,7 @@ namespace KolabLoader
         private void StartSession_Btn_Click(object sender, RoutedEventArgs e)
         {
             //todo - fire up unity
+            Process.Start(runtimeSettings._projectPath+"\\bin\\BaseSpoutInterop.exe");
         }
 
         private void InviwoExeChoose_Btn_Click(object sender, RoutedEventArgs e)
@@ -157,7 +159,31 @@ namespace KolabLoader
             }
         }
 
+        private void UnityExeChoose_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                fbd.Description = "Select Unity/KoLAB Installation Folder (containing kolab.exe)";
+                fbd.RootFolder = Environment.SpecialFolder.MyComputer;
+                fbd.ShowNewFolderButton = false;
+
+                DialogResult result = fbd.ShowDialog();
+
+                if (runtimeSettings._projectPath.Length > 0 && File.Exists(runtimeSettings._projectPath)) fbd.SelectedPath = runtimeSettings._projectPath;
+
+                if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    runtimeSettings._projectPath = fbd.SelectedPath;
+                }
+            }
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            writeToJSON("C:/Users/flo/AppData/LocalLow/UlmUniversity/BaseSpoutInteropsettings.json", ref runtimeSettings);
+        }
+
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             writeToJSON("C:/Users/flo/AppData/LocalLow/UlmUniversity/BaseSpoutInteropsettings.json", ref runtimeSettings);
         }
