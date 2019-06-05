@@ -23,7 +23,12 @@ namespace KolabLoader
             InitializeComponent();
 
             //Read JSON
-            readFromJSON("C:/Users/flo/AppData/LocalLow/UlmUniversity/BaseSpoutInteropsettings.json", ref runtimeSettings);
+            bool result = readFromJSON(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"..\LocalLow") + "/UlmUniversity/BaseSpoutInteropsettings.json", ref runtimeSettings);
+            if(!result)
+            {
+                runtimeSettings = new KolabSettingsContainer();
+                System.Windows.MessageBox.Show("Default settings - please review configuration!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
             runtimeSettings.PropertyChanged += RuntimeSettings_PropertyChanged;
 
             //Read Wordlist
@@ -59,12 +64,8 @@ namespace KolabLoader
         {
             try
             {
-                using (var sw = new StreamWriter(new FileStream(path, FileMode.Truncate, FileAccess.Write)))
-                {
-                    string outStr = JsonConvert.SerializeObject(target,Formatting.Indented);
-                    sw.WriteLine(outStr);
-                    return true;
-                }
+                File.WriteAllText(path, JsonConvert.SerializeObject(target, Formatting.Indented));
+                return true;
             }
             catch (Exception e)
             {
@@ -98,8 +99,9 @@ namespace KolabLoader
 
         private void StartSession_Btn_Click(object sender, RoutedEventArgs e)
         {
-            //todo - fire up unity
-            Process.Start(runtimeSettings._projectPath+"\\bin\\BaseSpoutInterop.exe");
+            //save, then fire up unity
+            writeToJSON(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"..\LocalLow") + "/UlmUniversity/BaseSpoutInteropsettings.json", ref runtimeSettings);
+            Process.Start(runtimeSettings._projectPath+"\\bin\\BaseSpoutInterop.exe", "-Session "+runtimeSettings._session+" -FromLoader");
         }
 
         private void InviwoExeChoose_Btn_Click(object sender, RoutedEventArgs e)
@@ -180,12 +182,12 @@ namespace KolabLoader
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            writeToJSON("C:/Users/flo/AppData/LocalLow/UlmUniversity/BaseSpoutInteropsettings.json", ref runtimeSettings);
+            writeToJSON(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"..\LocalLow") + "/UlmUniversity/BaseSpoutInteropsettings.json", ref runtimeSettings);
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            writeToJSON("C:/Users/flo/AppData/LocalLow/UlmUniversity/BaseSpoutInteropsettings.json", ref runtimeSettings);
+            writeToJSON(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"..\LocalLow") + "/UlmUniversity/BaseSpoutInteropsettings.json", ref runtimeSettings);
         }
     }
 }

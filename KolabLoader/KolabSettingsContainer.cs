@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace KolabLoader
 {
@@ -6,20 +7,21 @@ namespace KolabLoader
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string _nickname { get; set; }
-        public string _institution { get; set; }
-        public string _session { get; set; }
-        public bool _useInviwoPositioning { get; set; }
-        public bool _rttVisualization { get; set; }
-        public bool _createRoomOnLoad { get; set; }
-        public bool _autoJoinFirstRoomOnLoad { get; set; }
-        public bool _externalRendererMode { get; set; }
-        public string _projectPath { get; set; }
-        public string _username { get; set; }
-        public string _password { get; set; }
-        public string _workspacesPath { get; set; }
-        public string _inviwoPath { get; set; }
-        public string _megamolPath { get; set; }
-        public string[] _collisionSN { get; set; }
+        public string _nickname { get; set; } = Environment.UserName;
+        public string _institution { get; set; } = "";
+        public string _session { get; set; } = "Default Room";
+        public bool _useInviwoPositioning { get; set; } = false;
+        public bool _rttVisualization { get; set; } = false;
+        public bool _createRoomOnLoad { get; set; } = false;
+        public bool _autoJoinFirstRoomOnLoad { get; set; } = false;
+        public bool _externalRendererMode { get; set; } = true;
+        public bool _desktopMode { get; set; } = true;
+        public string _projectPath { get; set; } = "undefined";
+        public string _username { get; set; } = "undefined";
+        public string _password { get; set; } = "undefined";
+        public string _workspacesPath { get; set; } = "undefined";
+        public string _inviwoPath { get; set; } = "undefined";
+        public string _megamolPath { get; set; } = "undefined";
+        public string[] _collisionSN { get; set; } = new string[0];
     }
 }
