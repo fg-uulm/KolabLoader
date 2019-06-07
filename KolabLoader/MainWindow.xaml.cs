@@ -101,7 +101,39 @@ namespace KolabLoader
         {
             //save, then fire up unity
             writeToJSON(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"..\LocalLow") + "/UlmUniversity/BaseSpoutInteropsettings.json", ref runtimeSettings);
-            Process.Start(runtimeSettings._projectPath+"\\bin\\BaseSpoutInterop.exe", "-Session "+runtimeSettings._session+" -FromLoader");
+            //fire up
+            try
+            {
+                if (File.Exists(runtimeSettings._projectPath + "/bin/BaseSpoutInterop.exe"))
+                {
+                    Process.Start(runtimeSettings._projectPath + "/bin/BaseSpoutInterop.exe", "-Session " + runtimeSettings._session + " -FromLoader");
+                }
+                else if (File.Exists(runtimeSettings._projectPath + "/BaseSpoutInterop.exe"))
+                {
+                    Process.Start(runtimeSettings._projectPath + "/BaseSpoutInterop.exe", "-Session " + runtimeSettings._session + " -FromLoader");
+                }
+                else if (File.Exists("../bin/BaseSpoutInterop.exe"))
+                {
+                    Process.Start("../bin/BaseSpoutInterop.exe", "-Session " + runtimeSettings._session + " -FromLoader");
+                }
+                else if (File.Exists("./BaseSpoutInterop.exe"))
+                {
+                    Process.Start("./BaseSpoutInterop.exe", "-Session " + runtimeSettings._session + " -FromLoader");
+                }
+                else if (File.Exists("../BaseSpoutInterop.exe"))
+                {
+                    Process.Start("../BaseSpoutInterop.exe", "-Session " + runtimeSettings._session + " -FromLoader");
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Unity EXE not found, cannot start.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception xe)
+            {
+                System.Windows.MessageBox.Show("Unity EXE start error: "+xe.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private void InviwoExeChoose_Btn_Click(object sender, RoutedEventArgs e)
