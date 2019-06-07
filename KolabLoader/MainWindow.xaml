@@ -6,7 +6,7 @@
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:local="clr-namespace:KolabLoader"
         mc:Ignorable="d"
-        Title="KoLAB  - Virtuelle Kollaborationslabore BaWü" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Width="810" Margin="0" Height="507" Closing="Window_Closing">
+        Title="KoLAB  - Virtuelle Kollaborationslabore BaWü" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" Width="810" Margin="0" Height="507" Closing="Window_Closing">
     <StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
