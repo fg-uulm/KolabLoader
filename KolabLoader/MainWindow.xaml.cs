@@ -159,7 +159,7 @@ namespace KolabLoader
         {
             using (var fbd = new FolderBrowserDialog())
             {
-                fbd.Description = "Select Megamol Installation Folder (containing megamol.exe)";
+                fbd.Description = "Select Megamol Installation Folder (containing mmconsole.exe)";
                 fbd.RootFolder = Environment.SpecialFolder.MyComputer;
                 fbd.ShowNewFolderButton = false;
 
@@ -169,7 +169,7 @@ namespace KolabLoader
 
                 if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    runtimeSettings._megamolPath = fbd.SelectedPath + "\\megamol.exe";
+                    runtimeSettings._megamolPath = fbd.SelectedPath + "\\mmconsole.exe";
                 }
             }
         }
